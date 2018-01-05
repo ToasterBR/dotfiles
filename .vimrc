@@ -6,6 +6,12 @@ colorscheme one-dark
 " Deixa acessar o clipboard do sistema
 set clipboard=unnamed
 
+" inicia o modo spell check
+set spell
+set spelllang=pt_br
+
+
+
 " Iniciar o sistema de plugin
 call plug#begin('~/.toaster/plugins')
 
@@ -27,6 +33,13 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'kien/ctrlp.vim'
 Plug 'w0rp/ale'
 Plug 'severin-lemaignan/vim-minimap'
+Plug 'dbmrq/vim-ditto'
+Plug 'dbmrq/vim-redacted'
+Plug 'yangmillstheory/vim-snipe'
+Plug 'mileszs/ack.vim'
+Plug 'gregsexton/MatchTag'
+Plug 'haya14busa/incsearch.vim'
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 
@@ -188,6 +201,20 @@ nnoremap <silent> <F2> :MinimapToggle<CR>
 " Autocommands
 "autocmd BufReadPost * VimFilerExplorer
 
+" Maps do Snipe
+map <leader><leader>f <Plug>(snipe-f)
+map <leader><leader>ge <Plug>(snipe-ge)
+nmap <leader><leader>] <Plug>(snipe-f-xp)
+nmap <leader><leader>[ <Plug>(snipe-F-xp)
+nmap <leader><leader>x <Plug>(snipe-f-x)
+nmap <leader><leader>X <Plug>(snipe-F-x)
+nmap <leader><leader>r <Plug>(snipe-f-r)
+nmap <leader><leader>R <Plug>(snipe-F-r)
+nmap <leader><leader>a <Plug>(snipe-f-a)
+nmap <leader><leader>A <Plug>(snipe-F-a)
+
+
+
 " Configurações
 set number
 set numberwidth=5
@@ -197,6 +224,7 @@ hi CursorLine   cterm=NONE ctermbg=darkgrey
 set cursorline!
 set splitbelow
 set splitright
+set noshowmode
 
 " Determina a fonte correta para o gvim ou macvim
 " Use set guifont=* para escolher e set guifont? para saber qual o nome
@@ -211,6 +239,46 @@ set guioptions=
 set t_vb=
 set novisualbell
 
+" Configurações do Ditto
+" Use autocmds to check your text automatically and keep the highlighting
+" up to date (easier):
+au FileType markdown,text,tex DittoOn  " Turn on Ditto's autocmds
+nmap <leader>di <Plug>ToggleDitto      " Turn Ditto on and off
+
+" If you don't want the autocmds, you can also use an operator to check
+" specific parts of your text:
+" vmap <leader>d <Plug>Ditto	       " Call Ditto on visual selection
+" nmap <leader>d <Plug>Ditto	       " Call Ditto on operator movement
+
+nmap =d <Plug>DittoNext                " Jump to the next word
+nmap -d <Plug>DittoPrev                " Jump to the previous word
+nmap +d <Plug>DittoGood                " Ignore the word under the cursor
+nmap _d <Plug>DittoBad                 " Stop ignoring the word under the cursor
+nmap ]d <Plug>DittoMore                " Show the next matches
+nmap [d <Plug>DittoLess                " Show the previous matches
+
+" Aprende na marra a se movimentar nessa porra :D
+nnoremap <Left> :echoe "Use o h"<CR>
+nnoremap <Right> :echoe "Use o l"<CR>
+nnoremap <Up> :echoe "Use o k"<CR>
+nnoremap <Down> :echoe "Use o j"<CR>
 
 
+" Usar o Ack com o AG
+let g:ackprg = 'ag --vimgrep'
 
+
+" :h g:incsearch#auto_nohlsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
+
+autocmd BufRead,BufNewFile */application/views/* set filetype=html
+
+" let g:user_emmet_leader_key='<CR>'
