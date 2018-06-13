@@ -210,4 +210,4 @@ map <F4> :GrammarousCheck
 nmap <F6> <Plug>(grammarous-open-info-window) 	
 nmap <F7> <Plug>(grammarous-fixit) 	
 nmap <F8> <Plug>(grammarous-move-to-next-error) 	
-nmap <F5> <Plug>(grammarous-move-to-previous-error
+nmap <F5> <Plug>(grammarous-move-to-previous-error)
